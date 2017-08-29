@@ -60,6 +60,14 @@ addEntry(("1", "", "2", ret));
 val ret = assertEquals (foo 8 7) (56);
 addEntry(("1", "", "3", ret));
 ```
+#### Getting Results
+
+Results can be received via a `GET` request following the format `GET results/p/s_p/`
+```
+ conn = http.client.HTTPConnection("localhost:8181")
+ conn.request("GET", "results/%i" (problem_number))
+```
+For any of the fields, `" "` can be substitute as a `*` regex, grabbing all
 
 #### Result code format:
 
