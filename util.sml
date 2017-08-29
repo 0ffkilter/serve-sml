@@ -16,7 +16,7 @@ fun strToSlice str = (Word8ArraySlice.full (Word8Array.fromList (map (Word8.from
 
 fun sliceToStr slice = 
     let val len = Word8ArraySlice.length slice
-	fun f i = Char.chr (Word8.toInt (Word8ArraySlice.sub (slice, i)))
+    fun f i = Char.chr (Word8.toInt (Word8ArraySlice.sub (slice, i)))
     in 
-	String.implode (List.tabulate (len, f))
+    String.implode (List.tabulate (len, f))
     end
