@@ -64,9 +64,9 @@ fun handler "GET" ["status"] _ =
   | handler "GET" ("file"::xs) _ = 
     runFile xs
   | handler "GET" ["results", p] _ =
-        ok (getProblem p " ")
+        ok (getProblem p "_")
   | handler "GET" ["results", p, sub_p] _=
-    ok ("Results " ^ (getProblem p sub_p))
+    ok (getProblem p sub_p)
   | handler "GET" ["kill"] _ =
     (ok ("Killing server...");
         OS.Process.exit OS.Process.success)

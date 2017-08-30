@@ -4,7 +4,7 @@ local
         if v = "(*)"
             then false
         else
-            if e = (" ")
+            if e = ("_")
                 then true
             else
                 v = e;
@@ -34,12 +34,7 @@ fun entries_to_string nil = ""
                 x
         end;
 
-fun filterEntries _ _ _ nil = 
-        let
-            val _ = print ("empty?")
-        in
-            []
-        end
+fun filterEntries _ _ _ nil = []
     | filterEntries p s_p n (x::xs) = if 
         matchEntry x p s_p n then
             (entry_to_string x)::(filterEntries p s_p n xs)
@@ -66,4 +61,4 @@ fun addEntry value =
 
 
 fun getProblem p s_p =
-        buildEntries p s_p " " (Array.foldr (op ::) [] entries);
+        buildEntries p s_p "_" (Array.foldr (op ::) [] entries);
