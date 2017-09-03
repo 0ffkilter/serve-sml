@@ -73,13 +73,4 @@ fun handler "GET" ["status"] _ =
   | handler _ _ _ = 
     err404 "Sorry; I don't know how to do that";
 
-
-fun getPort (port::_) = 
-    let fun p (SOME n) = n
-      | p NONE = 8181
-    in 
-    p (Int.fromString port)
-    end
-  | getPort _ = 8181;
-
-Serv.serve (getPort (CommandLine.arguments ())) (route (handler)) ;
+Serv.serve default_port (route (handler)) ;

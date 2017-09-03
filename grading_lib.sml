@@ -59,6 +59,12 @@ fun addEntry value =
         Array.update(entries, 0, ("(*)", "(*)", "(*)", Int.toString(idx + 1)))
     end;
 
+fun addTest p n value = 
+    addEntry (p, " ", n, value);
+
+fun addSubTest p s_p n value =
+    addEntry (p, s_p, n, value);
+
 
 fun getProblem p s_p =
         buildEntries p s_p "_" (Array.foldr (op ::) [] entries);

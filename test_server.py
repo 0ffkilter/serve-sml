@@ -7,7 +7,7 @@ def test_connection() -> bool:
 	#conn.request("GET", "filename/%s" %(filename))
 
 	r1 = conn.getresponse()
-	print(r1.status, r1.reason)
+	print(r1.status.type(), r1.reason)
 	print(r1.read())
 	return True
 
@@ -25,7 +25,8 @@ def get_results(problem_number:int) -> tuple:
 	conn = http.client.HTTPConnection("localhost:8181")
 	conn.request("GET", "results/%i" %(problem_number))
 	#conn.request("GET", "filename/%s" %(filename))
-	r1 = conn.getresponse()
+	r1 = conn.getresponse
+	print(type(r1))
 	print(r1.status, r1.reason)
 	print(r1.read())
 	return ()
