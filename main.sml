@@ -57,7 +57,8 @@ fun runFile filename =
                 ok string_name)
         else
             err500 "File not found"
-    end;
+    end
+    handle _ => err500 "File not found";
 
 fun handler "GET" ["status"] _ = 
     ok ("All Good")

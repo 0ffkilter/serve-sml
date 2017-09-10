@@ -29,3 +29,6 @@ fun assertPermutation stmt1 stmt2 =
 		then "0"
 	else "1"
 	handle _ => "2";
+
+fun addTest a x y = ();
+fun addSubTest a x y z = ();
