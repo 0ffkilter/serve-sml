@@ -46,6 +46,19 @@ fun build_filename nil = ""
                 x
         end;
 
+fun exportState filename = 
+    let
+        val path = build_filename filename
+        val export = SMLofNJ.exportML path
+        val _ = print("export")
+    in
+        if not export
+            then
+                ok path
+        else
+            err500 "Export failed"
+    end;
+
 
 fun runFile filename =
     let
@@ -61,17 +74,20 @@ fun runFile filename =
     handle _ => err500 "File not found";
 
 fun handler "GET" ["status"] _ = 
-    ok ("All Good")
+        ok ("All Good")
   | handler "GET" ("file"::xs) _ = 
-    runFile xs
+        runFile xs
   | handler "GET" ["results", p] _ =
         ok (getProblem p "_")
   | handler "GET" ["results", p, sub_p] _=
-    ok (getProblem p sub_p)
+        ok (getProblem p sub_p)
+  | handler "GET" ("export"::xs) _ =
+        exportState xs
   | handler "GET" ["kill"] _ =
-    (ok ("Killing server...");
+        (ok ("Killing server...");
         OS.Process.exit OS.Process.success)
   | handler _ _ _ = 
     err404 "Sorry; I don't know how to do that";
 
+SMLofNJ.exportML "server-state";
 Serv.serve default_port (route (handler)) ;
