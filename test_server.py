@@ -37,7 +37,7 @@ def export(filename: str) -> bool:
 
 def get_results(problem_number: int) -> tuple:
     conn = http.client.HTTPConnection("localhost:8181")
-    conn.request("GET", "results/%i" % (problem_number))
+    conn.request("GET", "results/%s" % (problem_number))
     # conn.request("GET", "filename/%s" %(filename))
     r1 = conn.getresponse()
     print(r1.status, r1.reason)
@@ -54,14 +54,19 @@ def kill_server():
         pass
 
 
-p = subprocess.Popen("sml start_server.sml", shell=True)
+p = subprocess.Popen("sml start_server.sml",
+                     shell=True, stdout=subprocess.PIPE)
+
+for l in iter(p.stdout.readline, ""):
+    print("| " + l.decode(), end="")
+
 try:
     test_connection()
     use_file("example_sml/sample_assignment.sml")
     use_file("example_sml/simple_test.sml")
     use_file("example_sml/simple_test_2.sml")
     export("foo")
-    get_results(1)
+    get_results("1a")
     kill_server()
 except Exception as e:
     print(e)

@@ -3,4 +3,6 @@ val s_p = "a";
 val n = "1";
 
 val ret = assertEquals (foo 55) (bar 12 5);
-addEntry((p, s_p, n, ret));
+
+addTest "2" "1" ret;
+addTest "2" "2" "1";

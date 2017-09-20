@@ -78,9 +78,7 @@ fun handler "GET" ["status"] _ =
   | handler "GET" ("file"::xs) _ = 
         runFile xs
   | handler "GET" ["results", p] _ =
-        ok (getProblem p "_")
-  | handler "GET" ["results", p, sub_p] _=
-        ok (getProblem p sub_p)
+        ok (getProblem p)
   | handler "GET" ("export"::xs) _ =
         exportState xs
   | handler "GET" ["kill"] _ =

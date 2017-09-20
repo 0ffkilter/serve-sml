@@ -9,18 +9,17 @@ local
             else
                 v = e;
 in
-    fun matchEntry (a,b,c,d) p s_p n =     
+    fun matchEntry (a,b,c) p n =     
         if matchVar a p andalso
-            matchVar b s_p andalso
-            matchVar c n
+            matchVar b n
         then
             true
         else false
 
 end;
 
-fun entry_to_string (a,b,c,d) = 
-     (a ^ "/" ^ b ^ "/" ^ c ^ "/" ^ d);
+fun entry_to_string (a,b,c) = 
+     (a ^ "/" ^ b ^ "/" ^ c);
 
 fun entries_to_string nil = ""
     | entries_to_string (x::xs) = 
@@ -34,37 +33,33 @@ fun entries_to_string nil = ""
                 x
         end;
 
-fun filterEntries _ _ _ nil = []
-    | filterEntries p s_p n (x::xs) = if 
-        matchEntry x p s_p n then
-            (entry_to_string x)::(filterEntries p s_p n xs)
+fun filterEntries _ _ nil = []
+    | filterEntries p n (x::xs) = if 
+        matchEntry x p n then
+            (entry_to_string x)::(filterEntries p n xs)
         else            
-            filterEntries p s_p n xs;
+            filterEntries p n xs;
 
-fun buildEntries p s_p n entry_list = 
+fun buildEntries p n entry_list = 
     let 
-        val entry_list = filterEntries p s_p n (entry_list);
+        val entry_list = filterEntries p n (entry_list);
     in
         entries_to_string entry_list
     end;
 
-val entries = Array.array(100, ("(*)", "(*)", "(*)", "1"));
+val entries = Array.array(100, ("(*)", "(*)", "1"));
 
 fun addEntry value =
     let 
-        val (_, _, _, idx_str) = (Array.sub(entries, 0))
+        val (_, _, idx_str) = (Array.sub(entries, 0))
         val idx = valOf (Int.fromString(idx_str))
     in 
         Array.update(entries, idx, value);
-        Array.update(entries, 0, ("(*)", "(*)", "(*)", Int.toString(idx + 1)))
+        Array.update(entries, 0, ("(*)", "(*)", Int.toString(idx + 1)))
     end;
 
 fun addTest p n value = 
-    addEntry (p, " ", n, value);
+    addEntry (p, n, value);
 
-fun addSubTest p s_p n value =
-    addEntry (p, s_p, n, value);
-
-
-fun getProblem p s_p =
-        buildEntries p s_p "_" (Array.foldr (op ::) [] entries);
+fun getProblem p =
+        buildEntries p "_" (Array.foldr (op ::) [] entries);
