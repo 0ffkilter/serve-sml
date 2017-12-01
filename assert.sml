@@ -4,6 +4,8 @@ fun assertEquals stmt1 stmt2 =
     else "1"
     handle _ => "2";
 
+fun assertError stmt1 = "1";
+
 fun assertEqualsReal stmt1 stmt2 = 
 	if (fn (x,y) => Real.==(x,y)) (stmt1, stmt2)
 		then "0"
@@ -30,5 +32,5 @@ fun assertPermutation stmt1 stmt2 =
 	else "1"
 	handle _ => "2";
 
-fun addTest a x y = ();
-fun addSubTest a x y z = ();
+fun addTest a x y z = ();
+fun addSubTest a w x y z = ();

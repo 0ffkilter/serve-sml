@@ -9,7 +9,7 @@ local
             else
                 v = e;
 in
-    fun matchEntry (a,b,c) p n =     
+    fun matchEntry (a,b,c,d) p n =     
         if matchVar a p andalso
             matchVar b n
         then
@@ -18,8 +18,8 @@ in
 
 end;
 
-fun entry_to_string (a,b,c) = 
-     (a ^ "/" ^ b ^ "/" ^ c);
+fun entry_to_string (a,b,c,d) = 
+     (a ^ "/" ^ b ^ "/" ^ c ^ "/" ^ d);
 
 fun entries_to_string nil = ""
     | entries_to_string (x::xs) = 
@@ -47,19 +47,19 @@ fun buildEntries p n entry_list =
         entries_to_string entry_list
     end;
 
-val entries = Array.array(100, ("(*)", "(*)", "1"));
+val entries = Array.array(100, ("(*)", "(*)", "(*)", "1"));
 
 fun addEntry value =
     let 
-        val (_, _, idx_str) = (Array.sub(entries, 0))
+        val (_, _, _, idx_str) = (Array.sub(entries, 0))
         val idx = valOf (Int.fromString(idx_str))
     in 
         Array.update(entries, idx, value);
-        Array.update(entries, 0, ("(*)", "(*)", Int.toString(idx + 1)))
+        Array.update(entries, 0, ("(*)", "(*)", "(*)", Int.toString(idx + 1)))
     end;
 
-fun addTest p n value = 
-    addEntry (p, n, value);
+fun addTest p n msg value = 
+    addEntry (p, n, msg, value);
 
 fun getProblem p =
         buildEntries p "_" (Array.foldr (op ::) [] entries);
