@@ -87,5 +87,4 @@ fun handler "GET" ["status"] _ =
   | handler _ _ _ = 
     err404 "Sorry; I don't know how to do that";
 
-SMLofNJ.exportML "server-state";
 Serv.serve default_port (route (handler)) ;
